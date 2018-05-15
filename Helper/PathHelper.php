@@ -2,6 +2,8 @@
 
 namespace Liip\MonitorBundle\Helper;
 
+use Symfony\Bundle\FrameworkBundle\Templating\Helper\AssetsHelper;
+use Symfony\Bundle\FrameworkBundle\Templating\Helper\RouterHelper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class PathHelper
@@ -10,12 +12,15 @@ class PathHelper
     protected $routerHelper;
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * Constructor
+     *
+     * @param AssetsHelper $assetsHelper
+     * @param RouterHelper $routerHelper
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(AssetsHelper $assetsHelper, RouterHelper $routerHelper)
     {
-        $this->assetsHelper = $container->get('templating.helper.assets');
-        $this->routerHelper = $container->get('templating.helper.router');
+        $this->assetsHelper = $assetsHelper;
+        $this->routerHelper = $routerHelper;
     }
 
     /**
@@ -26,7 +31,8 @@ class PathHelper
     {
         $ret = array();
         foreach ($routes as $route => $params) {
-            $ret[] = sprintf('api.%s = "%s";', $route, $this->routerHelper->generate($route, $params));
+            // path method is available only since 2.8
+            $ret[] = sprintf('api.%s = "%s";', $route, $this->routerHelper->path($route, $params));
         }
 
         return $ret;

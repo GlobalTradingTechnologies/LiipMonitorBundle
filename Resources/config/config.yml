@@ -2,7 +2,7 @@ services:
     liip_monitor.check.runner:
         class: Liip\Monitor\Check\Runner
         arguments:
-            - @liip_monitor.check_chain
+            - "@liip_monitor.check_chain"
 
     liip_monitor.check_chain:
         class: Liip\Monitor\Check\CheckChain
@@ -10,15 +10,16 @@ services:
     liip_monitor.health.controller:
         class: Liip\MonitorBundle\Controller\HealthCheckController
         arguments:
-            - @liip_monitor.check_chain
-            - @liip_monitor.check.runner
-            - @liip_monitor.helper.path
+            - "@liip_monitor.check_chain"
+            - "@liip_monitor.check.runner"
+            - "@liip_monitor.helper.path"
 
     liip_monitor.helper.path:
         class: Liip\MonitorBundle\Helper\PathHelper
         public: false
         arguments:
-            - @service_container
+            - "@templating.helper.assets"
+            - "@templating.helper.router"
 
     liip_monitor.check.custom_error_pages:
         class: Liip\MonitorBundle\Check\CustomErrorPagesCheck
@@ -80,7 +81,7 @@ services:
         class: Liip\Monitor\Check\SecurityAdvisoryCheck
         public: false
         arguments:
-            - @liip_monitor.security_checker
+            - "@liip_monitor.security_checker"
 
     liip_monitor.security_checker:
         class: SensioLabs\Security\SecurityChecker

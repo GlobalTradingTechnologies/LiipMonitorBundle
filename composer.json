@@ -19,9 +19,9 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
-        "liip/monitor": "1.0.*",
-        "symfony/framework-bundle": "~2.0"
+        "php": ">=5.3.3|>=7.0",
+        "liip/monitor": "^1.0.0",
+        "symfony/framework-bundle": "^2.8|^3.0"
     },
     "suggest": {
         "sensio/distribution-bundle": "To be able to use the composer ScriptHandler"
